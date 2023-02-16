@@ -1,0 +1,41 @@
+pipeline{
+    agent any
+
+    stages{
+        stage("Checkout"){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/jayaharisai5/House-Price-Predication.git']]])
+            }
+        }
+        stage("build"){
+            steps{
+                git branch: 'main', url: 'https://github.com/jayaharisai5/House-Price-Predication.git'
+            }
+        }
+        stage("load data"){
+            steps{
+                sh 'python3 _1_load_data.py'
+            }
+        }
+        stage("data analysis"){
+            steps{
+                sh 'python3 _2_data_analysis.py'
+            }
+        }
+        stage("data preprocessing"){
+            steps{
+                sh 'python3 _3_data_preprocessing.py'
+            }
+        }
+        stage("data visualization"){
+            steps{
+                sh 'python3 _4_feature_engineering.py'
+            }
+        }
+        stage("feature engineering"){
+            steps{
+                sh 'python3 _5_model_training.py'
+            }
+        }
+    }
+}
