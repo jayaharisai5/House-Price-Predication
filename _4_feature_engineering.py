@@ -9,6 +9,8 @@ def feature_engineering():
     df['BHK_OR_RK'] = label_encoder.fit_transform(df['BHK_OR_RK'])
 
     df = df.drop(columns = ["READY_TO_MOVE", "ADDRESS"], axis=1)
+    
+    df.to_csv('cleaned.csv')
 
     print(df.shape)
     return df
